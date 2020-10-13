@@ -1,0 +1,48 @@
+{
+  "name": "react-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@wigxel/react-components": "^1.0.10",
+    "@wigxel/utils": "^1.0.8",
+    "lodash": "^4.17.19",
+    "ramda": "^0.27.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-feather": "^2.0.8",
+    "react-hook-form": "^6.0.8",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.4.1",
+    "styled-components": "^5.0.1",
+    "tailwindcss": "^1.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:styles": "postcss src/assets/css/tailwind.css -o src/styles.css",
+    "react:test": "react-scripts test",
+    "test": "echo 're-enable when you have jest tests' && exit 0",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^4.3.4",
+    "autoprefixer": "^9.7.4",
+    "postcss-cli": "^7.1.0",
+    "postcss-preset-env": "^6.7.0"
+  }
+}
