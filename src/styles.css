@@ -13953,13 +13953,13 @@ video {
 :root {
   --primary-color: #007bff;
   --red-color: #ff0000;
-  --heading-font: "SF Pro Display";
-  --input-font: "SF Pro Display";
+  --heading-font: "SF Pro Display", "Helvetica Neue", "Segeo UI", sans-serif;
+  --input-font: "SF Pro Display", sans-serif;
   --color-8: #f15887;
 }
 
 body {
-  font-family: "SF Pro Display";
+  font-family: "SF Pro Display", sans-serif;
   font-size: 14px;
 }
 

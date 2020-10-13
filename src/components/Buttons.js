@@ -104,8 +104,8 @@ Tab.Holder = styled.div`
 
 export const Button = (props) => {
   const activeClass = !props.disabled ? 'bg-primary' : ' bg-gray-400';
-  return <button className={`${activeClass} text-white rounded-lg px-4 mx-2 py-2 text-sm`}>
-    {props.children}
+  return <button className={`${activeClass} inline-flex items-center text-white rounded-lg px-4 py-2 text-sm`}>
+    <span>{props.children}</span> {props.IconRight}
   </button>
 };
 

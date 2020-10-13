@@ -1,9 +1,29 @@
+import * as R from'ramda'
 import { makeStore } from "./makeStore";
+
+const addToLS = (a) => {
+  localStorage.setItem("CART_STORE", JSON.stringify(a));
+  return a;
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
     case actions.ADD_TO_CART:
-      return { items: [...state.items, action.payload] };
+      return addToLS({ ...state, items: [...state.items, action.payload] });
+
+    case actions.HYDRATE:
+    	if (!state.hydrated) {
+    		return { ...action.payload, hydrated: true };
+    	}
+    	return state;
+
+    case actions.REMOVE_ITEM:
+    	return addToLS(R.over(R.lensProp('items'), R.filter((e) => e.getId() !== action.payload), state))
+
+    case actions.SET_ITEM_QUANTITY:
+	    const { itemIndex, quantity } = action;
+	    const indexLens = R.lensPath(['items', itemIndex]);
+	    return R.over(indexLens, R.set(R.lensProp('quantity'), quantity), state);
 
     default:
       return state;
@@ -12,6 +32,7 @@ const reducer = (state, action) => {
 
 export const { useDispatch, Provider, useStore } = makeStore(
   {
+  	hydrated: false,
     items: [],
   },
   reducer
@@ -19,4 +40,7 @@ export const { useDispatch, Provider, useStore } = makeStore(
 
 export const actions = {
   ADD_TO_CART: "ADD_TO_CART",
+  HYDRATE: "HYDRATE",
+  REMOVE_ITEM: "REMOVE_ITEM",
+  SET_ITEM_QUANTITY: "SET_ITEM_QUANTITY"
 };

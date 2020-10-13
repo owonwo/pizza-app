@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "@wigxel/react-components";
+import { Link } from "react-router-dom";
 // import { ToggleButton, ThemeToggle } from "./Buttons";
 // import { useLayout } from "../libs/LayoutStore";
-import Logo from "../assets/images/logo.png";
-import { Menu, ShoppingCart, User } from "react-feather";
+import { Grid, ShoppingCart, User } from "react-feather";
 import { useStore } from "../stores/CartStore";
 
 const HeaderStyle = styled.header`
@@ -25,18 +25,20 @@ const HeaderStyle = styled.header`
 
 export const Header = () => {
   // const { store, action } = useLayout();
-  const { items: cartItems } = useStore();
+  const { items: cartItems = [] } = useStore();
 
   return (
     <HeaderStyle className="sticky p-3" style={{ top: 0 }}>
       <div className="flex justify-between container mx-auto pl-3">
-        <embed src={Logo} className="h-10" alt="Logo" />
+        <span className="text-lg">
+          <b>Pizza</b>KING
+        </span>
         <section className="sec-nav flex justify-end items-center">
           {[
             {
-              Icon: Menu,
-              text: "Menu",
-              route: "/Menu",
+              Icon: Grid,
+              text: "Pizzas",
+              route: "/menu",
             },
             {
               Icon: () => (
@@ -59,10 +61,14 @@ export const Header = () => {
               route: "/login",
             },
           ].map((e, idx) => (
-            <li key={idx} className="px-2 inline-flex gap-2 items-center">
-              {<e.Icon />}
-              {/* <span className="text-sm">{e.text}</span> */}
-            </li>
+            <Link to={e.route}>
+              <a>
+                <li key={idx} className="px-2 inline-flex flex-col mx-4 items-center">
+                  {<e.Icon />}
+                  <span className="text-xs font-bold">{e.text}</span>
+                </li>
+              </a>
+            </Link>
           ))}
           {/* <ThemeToggle isDarkMode={store.isDarkMode} onClick={action({ type: 'TOGGLE_DARK_MODE'})} /> */}
         </section>

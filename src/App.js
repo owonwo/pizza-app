@@ -7,6 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { ThemeProvider as WThemeProvider } from "@wigxel/react-components";
 import { Light } from "./libs/Theme";
 import Menu from "./views/Menu";
+import Cart from "./views/Cart";
 import { Provider as CartProvider } from "./stores/CartStore";
 
 const App = () => {
@@ -16,8 +17,9 @@ const App = () => {
         <ThemeProvider theme={Light}>
           <Router>
             <Switch>
-              <Route path="/" component={Menu} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/Cart" component={Cart} />
+              <Route path="/" component={Menu} />
             </Switch>
           </Router>
         </ThemeProvider>

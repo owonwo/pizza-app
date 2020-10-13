@@ -2,9 +2,13 @@ import React from "react";
 import { FAKE_PIZZA_IMAGE_URL } from "../libs/data/constants";
 import PizzaCard from "../components/PizzaCard";
 import Layout from "./Layout";
+import useCart from '../hooks/useCart'
 import { H1, P } from "@wigxel/react-components/lib/typography";
+import { PizzaFactory } from '../libs/factories';
 
 export const Menu = () => {
+  useCart();
+
   return (
     <Layout>
       <div className="py-8 flex-1">
@@ -19,7 +23,12 @@ export const Menu = () => {
 
         <div className="grid grid-cols-4 gap-6 w-full mt-4">
           {Array(30)
-            .fill({ name: "Something Pizza", image: FAKE_PIZZA_IMAGE_URL })
+            .fill({
+              name: "Something Pizza",
+              price: 50.23,
+              image: FAKE_PIZZA_IMAGE_URL,
+            })
+            .map(PizzaFactory)
             .map((e) => {
               return <PizzaCard {...e} />;
             })}
