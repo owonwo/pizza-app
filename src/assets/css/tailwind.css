@@ -1,0 +1,22 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+:root {
+  --primary-color: #007bff;
+  --red-color: #ff0000;
+  --heading-font: "SF Pro Display";
+  --input-font: "SF Pro Display";
+  --color-8: #f15887;
+}
+
+body {
+  font-family: "SF Pro Display";
+  font-size: 14px;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
