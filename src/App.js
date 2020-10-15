@@ -18,12 +18,12 @@ const App = () => {
         <ThemeProvider theme={Light}>
           <Router>
           	<Modal.Provider>
-            <Switch>
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/cart" component={Cart} />
-              	<Route exact path="/shipping" component={Shipping} />
-              <Route path="/" component={Menu} />
-            </Switch>
+	            <Switch>
+	              <Route exact path="/login" component={Login} />
+	              <Route exact path="/cart" component={Cart} />
+	              	<Route exact path="/shipping" component={Shipping} />
+	              <Route path="/" component={Menu} />
+	            </Switch>
           	</Modal.Provider>
           </Router>
         </ThemeProvider>

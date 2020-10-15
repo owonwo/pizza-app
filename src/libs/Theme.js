@@ -25,7 +25,7 @@ export const Light = {
 	...Generic,
 	bgColor: "#fff",
 	textColor: "#333",
-	whitesmoke: "#FCFCFC",
+	whitesmoke: "#fff",
 	invertBg: "#bee3f8",
 	invertColor: "#fff",
 	shadowColor: "#1877ff1c"
