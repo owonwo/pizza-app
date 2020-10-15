@@ -17,14 +17,16 @@ export const Cart = () => {
 
   return (
     <Layout>
-      <div className="py-8 flex-1">
-      	<button className="text-xs -ml-24"
+      <div className="py-8 flex-1 px-4">
+      	<button className="text-xs lg:-ml-24"
       		onClick={() => history.goBack()}>
       		<ArrowLeft /> MENU
       	</button>
+
         <H1 bold className="mb-0">
           Cart
         </H1>
+
         {/**<P className="-mt-2">Select Quantity and Checkout.</P>**/}
         <P className="-mt-2">
 	        {items.length > 1 ? 
@@ -34,19 +36,17 @@ export const Cart = () => {
 	        }
         </P>
         <br/>
-        <div className="py-2 w-1/2 -ml-6">
+        <div className="py-2 lg:w-1/2 lg:-ml-6">
           {items.map((e, idx) => (
           	<CartItem {...e} key={idx} index={idx} />
           ))}
         </div>
         <div className="flex justify-between items-start select-none border-t border-b border-gray-200 py-4">
         	<div>
-        		<div>Total Cost</div>
         		<H3>Total Billing</H3>
         	</div>
         	<div className="text-right">
-        		<div>$ {total.toFixed(2)}</div>
-        		<H3 bold>$ {(total + deliveryFee).toFixed(2)}</H3>
+        		<H3 bold>$ {(total).toFixed(2)}</H3>
         	</div>
         </div>
        	 <div className="flex justify-end py-4">
@@ -83,7 +83,7 @@ const CartItem = (e) => {
 
 	return (
 		<div className="flex mb-4 w-full relative">
-			<b className="pt-4 w-8">{e.index + 1}.</b>
+			<b className="pt-4 w-8 hidden lg:inline-block">{e.index + 1}.</b>
 
     	<figure>
     		<img src={e.image} className="bg-gray-200 w-24 h-24 rounded-lg p-2" alt={e.name} />

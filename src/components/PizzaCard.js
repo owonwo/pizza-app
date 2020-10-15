@@ -37,7 +37,7 @@ export const PizzaCard = (props) => {
           <b>{props.name}</b>
         </P>
         <div className="flex justify-between">
-          <P>$ {props.price}</P>
+          <P className="font-bold text-primary">$ {props.price}</P>
 
           {inCart ? (
             <span className="text-green-400 flex items-center">
