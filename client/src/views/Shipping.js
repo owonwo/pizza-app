@@ -59,10 +59,10 @@ export default function Shipping () {
 	
 	// takes the user back to the Cart page
 	//  if they are no items in the cart.
-	if (items.length === 0)
-		(history.length === 2)
-			? history.replace('/cart') 
-			: history.goBack('');
+	// if (items.length === 0)
+	// 	(history.length === 2)
+	// 		? history.replace('/cart') 
+	// 		: history.goBack('');
 
 	const total = getTotal();
 
@@ -75,37 +75,40 @@ export default function Shipping () {
 
 	return <Layout>
 		<div className="py-8">
-			<form className="grid grid-cols-1 gap-2 w-1/2 px-4">
-				<H2 bold>Shipping</H2>
-				<P className="pb-8 -mt-2">Enter Shipping Information below.</P>
+			<form className="grid grid-cols-1 gap-2 w-full lg:w-1/2 px-4">
+				<H2 bold>Checkout</H2>
+				<P className="pb-8 -mt-2">Enter Checkout Information below.</P>
 
-				<Labelled.Input ref={register} type="text" name="name" label="Full Name •" placeholder="John Snow" 
+				<Labelled.Input ref={register} type="text" fullwidth name="name" label="Full Name •" placeholder="John Snow" 
 					onKeyDown={noDigits}
 					message={showErrMessageIfAny('name', errors)}/>
-				<Labelled.Input ref={register} type="text" name="email" label="Email Address •" placeholder="john.snow@domain.com"
+				<Labelled.Input ref={register} type="text" fullwidth name="email" label="Email Address •" placeholder="john.snow@domain.com"
 					onKeyDown={noDigits} 
+					inputmode="email"
 					message={showErrMessageIfAny('email', errors)}/>
-				<Labelled.Number ref={register} type="number" name="phone" 
+				<Labelled.Number ref={register} type="number" fullwidth name="phone" 
 					label="Phone Number •" 
 					placeholder="+ 20 398 2039"
+					inputmode="tel"
 					style={{ textAlign: "left" }}
 					message={showErrMessageIfAny('phone', errors)}
 					/>
-					<Labelled.Number ref={register} type="number" name="zipcode" 
+					<Labelled.Number ref={register} type="number" fullwidth name="zipcode" 
 					label="ZIP Code •" 
 					placeholder="500238"
+					inputmode="tel"
 					style={{ textAlign: "left" }}
 					message={showErrMessageIfAny('phone', errors)}
 					/>
-				<div className="pt-1" />
-				<Labelled.Textarea ref={register} name="delivery_address" label="Delivery Address •" 
+				<div  fullwidth className="pt-1" />
+				<Labelled.Textarea ref={register} fullwidth name="delivery_address" label="Delivery Address •" 
 					placeholder="Enter your full address here." 
 					message={showErrMessageIfAny('delivery_address', errors)}
 					/>
 				<div className="mt-4">
 				</div>
 			</form>
-			<div className="w-1/2 px-4">
+			<div className="w-full lg:w-1/2 px-4">
 				<H4 bold>Order Information</H4>
 
 				<div className="flex justify-between items-start select-none border-t border-b border-gray-200 py-4 mb-4">
