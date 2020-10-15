@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ToggleButton, ThemeToggle } from "./Buttons";
 import { useLayout } from "../libs/LayoutStore";
 import { Grid, ShoppingCart, User } from "react-feather";
+import Logo from '../assets/images/white-logo.svg';
 import { useStore } from "../stores/CartStore";
 
 const HeaderStyle = styled.header`
@@ -78,7 +79,7 @@ export const Header = () => {
     <HeaderStyle className="relative md:sticky p-3" style={{ top: 0 }}>
       <div className="flex justify-between items-center container mx-auto pl-3">
         <span className="text-lg">
-          <b>Pizza</b>KING
+        	<img src={Logo} alt="Logo Images" className="h-16 md:h-20"/>
         </span>
         <div className="flex-1 hidden md:block">
         	<Nav className="justify-end" />

@@ -3,7 +3,7 @@ import React from 'react';
 let initial_state = {
 	menuOpen: true,
 	showNotif: true,
-	isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+	isDarkMode: false, // window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
 const ctx = React.createContext()
