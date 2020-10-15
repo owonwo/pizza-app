@@ -1,11 +1,12 @@
 import React from "react";
 import styled, { ThemeProvider } from "@wigxel/react-components";
-import { Header, Nav } from "../components/Header";
+import { Header, HeaderStyle, Nav } from "../components/Header";
 import { useLayout } from "../libs/LayoutStore";
 import { Light, Dark } from "../libs/Theme";
 // import useAuth from "../hooks/useAuth";
 
 const StyledLayout = styled.section`
+	color: ${(props) => props.theme.textColor};
   background-color: ${(props) => props.theme.whitesmoke};
 `;
 
@@ -19,10 +20,9 @@ const Layout = ({ children }) => {
 	        <section className="flex flex-col container lg:w-2/3 mx-auto">
 	          {children}
 	        </section>
-	        <div className="fixed bottom-0 w-full bg-white shadow-lg
-	        	border-t border-gray-200  md:hidden">
+	        <HeaderStyle className="fixed bottom-0 w-full bg-white shadow-lg md:hidden border-t border-mix">
 	        	<Nav className="w-full justify-between px-3 py-3" />
-	        </div>
+	        </HeaderStyle>
 	        <div className="h-24 md:hidden" />
 	      </StyledLayout>
 	    </ThemeProvider>

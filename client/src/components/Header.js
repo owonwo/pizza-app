@@ -2,19 +2,18 @@ import React from "react";
 import { useLocation } from 'react-router-dom'
 import styled from "@wigxel/react-components";
 import { Link } from "react-router-dom";
-import { ToggleButton, ThemeToggle } from "./Buttons";
+import { ThemeToggle } from "./Buttons";
 import { useLayout } from "../libs/LayoutStore";
 import { Grid, ShoppingCart, User } from "react-feather";
 import Logo from '../assets/images/white-logo.svg';
+import DarkLogo from '../assets/images/dark-variant.svg';
 import { useStore } from "../stores/CartStore";
 
-const HeaderStyle = styled.header`
+export const HeaderStyle = styled.header`
   z-index: 6;
-  display: flex;
   min-height: 60px;
-  ${(props) => console.log("BG Color", props.theme.bgColor)};
   background-color: ${(props) => props.theme.bgColor || "#333"};
-  color: ${(props) => props.theme.textColor || "#333"};
+  color: ${(props) => props.theme.colors._2 || "#333"};
   box-shadow: 0px 1px 25px ${(props) => props.theme.shadowColor};
 
   .sec-nav {
@@ -25,7 +24,6 @@ const HeaderStyle = styled.header`
 `;
 
 export const Nav = ({ className = '' }) => {
-	const { store, action } = useLayout();
 	const { items: cartItems = [] } = useStore();
 	const location = useLocation()
 
@@ -67,23 +65,26 @@ export const Nav = ({ className = '' }) => {
           </a>
         </Link>
       ))}
-      {false && <ThemeToggle isDarkMode={store.isDarkMode} onClick={action({ type: 'TOGGLE_DARK_MODE'})} /> }
     </nav>
    );
 }
 
 export const Header = () => {
-  // const { store, action } = useLayout();
+  const { store, action } = useLayout();
 
   return (
-    <HeaderStyle className="relative md:sticky p-3" style={{ top: 0 }}>
+    <HeaderStyle className="flex relative md:sticky p-3" style={{ top: 0 }}>
       <div className="flex justify-between items-center container mx-auto pl-3">
         <span className="text-lg">
-        	<img src={Logo} alt="Logo Images" className="h-16 md:h-20"/>
+        	<img src={store.isDarkMode ? DarkLogo : Logo} alt="Logo Images" className="h-16 md:h-20"/>
         </span>
         <div className="flex-1 hidden md:block">
         	<Nav className="justify-end" />
         </div>
+       	<div>
+		      {true && <ThemeToggle isDarkMode={store.isDarkMode} onClick={action({ type: 'TOGGLE_DARK_MODE'})} /> }
+		      <span className="text-xs font-bold"></span>
+		    </div>
       </div>
     </HeaderStyle>
   );
