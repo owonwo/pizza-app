@@ -1,21 +1,27 @@
 import React from "react";
 import Layout from "./Layout";
 import useCart from '../hooks/useCart';
+import { useHistory } from 'react-router-dom';
 import { Button } from '../components/Buttons';
-import { MinusCircle, PlusCircle, Trash, ArrowRight } from "react-feather";
+import { MinusCircle, PlusCircle, Trash, ArrowLeft } from "react-feather";
 import { H1, H3, P } from "@wigxel/react-components/lib/typography";
-import { useStore, useDispatch, actions } from "../stores/CartStore";
+import { useDispatch, actions } from "../stores/CartStore";
 
+
+// TODO: Notification Stack. 
+// Show Notification when a user adds an item to the cart
 export const Cart = () => {
-	useCart();
-  const { items = [] } = useStore();
-
-  const deliveryFee = 25;
-  const total = items.reduce((alloc, e) => alloc + e.price * (e.quantity || 1), 0)
+	const history = useHistory();
+  const { items, deliveryFee, getTotal } = useCart()
+  const total = getTotal();
 
   return (
     <Layout>
       <div className="py-8 flex-1">
+      	<button className="text-xs -ml-24"
+      		onClick={() => history.goBack()}>
+      		<ArrowLeft /> MENU
+      	</button>
         <H1 bold className="mb-0">
           Cart
         </H1>
@@ -36,19 +42,21 @@ export const Cart = () => {
         <div className="flex justify-between items-start select-none border-t border-b border-gray-200 py-4">
         	<div>
         		<div>Total Cost</div>
-        		<div>Delivery Fee</div>
         		<H3>Total Billing</H3>
         	</div>
         	<div className="text-right">
         		<div>$ {total.toFixed(2)}</div>
-        		<div>+ $ {deliveryFee}</div>
         		<H3 bold>$ {(total + deliveryFee).toFixed(2)}</H3>
         	</div>
         </div>
        	 <div className="flex justify-end py-4">
         	<Button
-	        		IconRight={<ArrowRight size={20} className="ml-4"/>}>
-	        		Proceed to Checkout 
+        		disabled={items.length === 0}
+        		className={items.length === 0 ? 'opacity-50' : ''}
+        		onClick={() => history.push('/shipping')}
+	        		// IconRight={<ArrowRight size={20} className="ml-4"/>}>
+	        		>
+	        		Proceed to Checkout
 	        	</Button>
 	       </div>
       </div>
@@ -66,6 +74,13 @@ const CartItem = (e) => {
 		quantity: quantity
 	})
 
+	const removeItem = () => {
+			dispatch({
+				type: actions.REMOVE_ITEM,
+				payload: e.getId()
+			})
+	}
+
 	return (
 		<div className="flex mb-4 w-full relative">
 			<b className="pt-4 w-8">{e.index + 1}.</b>
@@ -80,15 +95,12 @@ const CartItem = (e) => {
           $ {e.price}  &nbsp;/  &nbsp;<span className="opacity-50">${Number(e.price * quantity).toFixed(2)}</span>
         </span>
         <button className="inline-flex  items-center outline-none text-sm hover:text-red self-start mt-4"
-        	onClick={dispatch.thunkify({
-        		type: actions.REMOVE_ITEM,
-        		payload: e.getId()
-        	})}>
+        	onClick={removeItem}>
       		<Trash size={15} /> &nbsp; REMOVE
       	</button>
         <Quantity value={+quantity}
         	onIncrement={() => setQuantity(quantity + 1)}
-        	onDecrement={() => quantity >= 2 && setQuantity(quantity - 1)}
+        	onDecrement={() => quantity >= 2 ? setQuantity(quantity - 1) : removeItem()}
         	/>
       </section>
     </div>

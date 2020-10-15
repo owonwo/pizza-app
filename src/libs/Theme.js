@@ -1,7 +1,7 @@
 const Generic = {
-	primary: "#EA8A8A",
+	primary: "dodgerblue",
 	colors: {
-		primary: "#EA8A8A",
+		primary: "dodgerblue",
     accent: "#DABAE5",
     background: "#FFFFFF",
     surface: "white",

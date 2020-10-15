@@ -13,14 +13,14 @@ const Layout = ({ children }) => {
   const { store } = useLayout();
 
   return (
-    <ThemeProvider theme={store.isDarkMode ? Dark : Light}>
-      <StyledLayout className="min-h-screen">
-        <Header />
-        <section className="flex flex-col container lg:w-2/3 mx-auto">
-          {children}
-        </section>
-      </StyledLayout>
-    </ThemeProvider>
+	    <ThemeProvider theme={store.isDarkMode ? Dark : Light}>
+	      <StyledLayout className="min-h-screen">
+	        <Header />
+	        <section className="flex flex-col container lg:w-2/3 mx-auto">
+	          {children}
+	        </section>
+	      </StyledLayout>
+	    </ThemeProvider>
   );
 };
 
