@@ -17,14 +17,14 @@ const App = () => {
       <LayoutProvider>
         <ThemeProvider theme={Light}>
           <Router>
+          	<Modal.Provider>
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/cart" component={Cart} />
-          		<Modal.Provider>
               	<Route exact path="/shipping" component={Shipping} />
-          		</Modal.Provider>
               <Route path="/" component={Menu} />
             </Switch>
+          	</Modal.Provider>
           </Router>
         </ThemeProvider>
       </LayoutProvider>
