@@ -22,7 +22,7 @@ const reducer = (state, action) => {
     	return state;
 
     case actions.CLEAR_CART:
-    	return R.set(Lenses.Items, [], state);
+    	return addToLS(R.set(Lenses.Items, [], state));
 
     case actions.REMOVE_ITEM:
     	return addToLS(R.over(Lenses.Items, R.filter((e) => e.getId() !== action.payload), state))

@@ -3,11 +3,13 @@ import * as yup from "yup";
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Modal } from '@wigxel/react-components/lib/cards';
+import { Labelled } from "@wigxel/react-components/lib/form";
+import { Button } from '@wigxel/react-components/lib/buttons';
+import { H1, H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
+
 
 import Layout from "./Layout";
-import { H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
-import { Labelled } from "@wigxel/react-components/lib/form";
-import { Button } from '@wigxel/react-components/lib/buttons'
 import useCart from '../hooks/useCart';
 
 
@@ -40,17 +42,18 @@ const noDigits = (evt) => {
 
 export default function Shipping () {
 	const history = useHistory();
+	const { toggle } = Modal.useModal();
 	const { items, deliveryFee, getTotal, clearCart } = useCart();
 
-	const { register, errors, watch, handleSubmit, formState } = useForm({
+	const { register, errors, watch, formState } = useForm({
 		resolver: yupResolver(schema),
 		mode: "onChange",
 		defaultValues: {
-			name: "John Snow",
-			email: "Joseph.owonwo@wigxel.io",
-			phone: "03203923",
-			zipcode: '209823',
-			delivery_address: "27 Kings Avenue, Porter Land, UK."
+			// name: "John Snow",
+			// email: "Joseph.owonwo@wigxel.io",
+			// phone: "03203923",
+			// zipcode: '209823',
+			// delivery_address: "27 Kings Avenue, Porter Land, UK."
 		}
 	});
 	
@@ -65,8 +68,8 @@ export default function Shipping () {
 
 	const makeOrderRequest = (formData) => {
 		console.log('Shipping Info', formData)
-		
-		clearCart();
+		toggle('order-placed');
+		// clearCart();
 	}
 
 
@@ -125,5 +128,24 @@ export default function Shipping () {
 				</Button>
 			</div>
 		</div>
+
+		<Modal name="order-placed" size="sm"
+			onClose={() => {
+				clearCart()	
+			}}>
+			<div className="py-12 w-5/6 mx-auto">
+			<H3 bold className="text-center mb-4">Order Placed</H3>
+			<P className="text-center text-sm mb-24">Your order was successfully placed. You should receive a corresponding email at {watch('email')}</P>
+			<Button
+				primary
+				fullwidth
+				onClick={() => {
+					clearCart()
+					history.push('/')
+				}}>
+				Goto Menu
+			</Button>
+			</div>
+		</Modal>
 	</Layout>
 }
