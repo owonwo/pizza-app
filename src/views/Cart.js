@@ -41,7 +41,7 @@ export const Cart = () => {
           	<CartItem {...e} key={idx} index={idx} />
           ))}
         </div>
-        <div className="flex justify-between items-start select-none border-t border-b border-gray-200 py-4">
+        <div className="flex justify-between items-start select-none border-t border-b border-mix py-4">
         	<div>
         		<H3>Total Billing</H3>
         	</div>
@@ -86,7 +86,10 @@ const CartItem = (e) => {
 			<b className="pt-4 w-8 hidden lg:inline-block">{e.index + 1}.</b>
 
     	<figure>
-    		<img src={e.image} className="bg-gray-200 w-24 h-24 rounded-lg p-2" alt={e.name} />
+    		<img 
+    			src={e.image} 
+    			className="w-24 h-24 rounded-lg p-2 bg-mix" 
+    			alt={e.name} />
     	</figure>
 
     	<section className="px-4 flex-1 flex flex-col justify-between">

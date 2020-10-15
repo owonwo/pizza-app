@@ -1,7 +1,7 @@
 const Generic = {
-	primary: "dodgerblue",
+	primary: "#68d391",
 	colors: {
-		primary: "dodgerblue",
+		primary: "#68d391",
     accent: "#DABAE5",
     background: "#FFFFFF",
     surface: "white",
@@ -23,6 +23,10 @@ const Generic = {
 
 export const Light = {
 	...Generic,
+	colors: {
+		...Generic.colors,
+		_3: "#69d392",
+	},
 	bgColor: "#fff",
 	textColor: "#333",
 	whitesmoke: "#fff",
@@ -33,9 +37,14 @@ export const Light = {
 
 export const Dark = {
 	...Generic,
+	colors: {
+		...Generic.colors,
+		_2: "#fcfcfc",
+		primary: "#ed8936",
+	},
 	bgColor: "#333",
-	textColor: "#fff",
-	whitesmoke: "#252525",
+	textColor: "#333",
+	whitesmoke: "#68d391",
 	invertBg: "#718096",
 	invertColor: "#333",
 	shadowColor: "#0000001c"

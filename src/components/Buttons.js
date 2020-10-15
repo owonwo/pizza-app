@@ -114,27 +114,30 @@ export const Button = (props) => {
 
 const StyledThemeToggle = styled.button`
 	overflow: hidden;
+	border-radius: 50%;
 	&:focus { outline: none; }
 
 	&, &::after {
 		background-color: lightblue;
-		${props => props.isDarkMode && css`
+		${props => !props.isDarkMode && css`
 			background-color: orange;
 		`}
 		border-radius: 50%;
-		height: 1.1rem;
-		width: 1.1rem;
+		height: 1.3rem;
+		width: 1.3rem;
 		transition: all .2s ease-in;
 	}
 	
 	&::after {
 		content: "";
 		display: block;
+		height: 90%;
 		background-color: #333;
-		transform: translateX(-30%);
+		transform: translate(-30%, -20%);
 
-		${props => props.isDarkMode && css`
-			transform: translateX(-70%);
+		${props => !props.isDarkMode && css`
+			background-color: rgba(255, 255, 255);
+			transform: translate(-50%, 0);
 		`}
 	}
 `

@@ -6,6 +6,10 @@ import { useDispatch, useStore } from "../stores/CartStore";
 import { Check } from "react-feather";
 
 const StyledCard = styled.div`
+  .in-cart {
+  	color: ${props => props.theme.colors._3 || '#333' };
+  }
+
   figure {
     img {
       transition: all 0.3s ease-in 0.15s;
@@ -40,7 +44,7 @@ export const PizzaCard = (props) => {
           <P className="font-bold text-primary">$ {props.price}</P>
 
           {inCart ? (
-            <span className="text-green-400 flex items-center">
+            <span className="in-cart flex items-center">
               <Check size={15} /> <span className="ml-2">Added</span>
             </span>
           ) : (
