@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./Layout";
 import useCart from '../hooks/useCart';
 import { useHistory } from 'react-router-dom';
-import { Button } from '../components/Buttons';
+import { Button } from '@wigxel/react-components/lib/buttons';
 import { MinusCircle, PlusCircle, Trash, ArrowLeft } from "react-feather";
 import { H1, H3, P } from "@wigxel/react-components/lib/typography";
 import { useDispatch, actions } from "../stores/CartStore";
@@ -19,7 +19,7 @@ export const Cart = () => {
     <Layout>
       <div className="py-8 flex-1 px-4">
       	<button className="text-xs lg:-ml-24"
-      		onClick={() => history.goBack()}>
+      		onClick={() => history.push('/')}>
       		<ArrowLeft /> MENU
       	</button>
 
@@ -51,8 +51,8 @@ export const Cart = () => {
         </div>
        	 <div className="flex justify-end py-4">
         	<Button
+        		primary
         		disabled={items.length === 0}
-        		className={items.length === 0 ? 'opacity-50' : ''}
         		onClick={() => history.push('/shipping')}
 	        		// IconRight={<ArrowRight size={20} className="ml-4"/>}>
 	        		>
