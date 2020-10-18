@@ -59,10 +59,10 @@ export default function Shipping () {
 	
 	// takes the user back to the Cart page
 	//  if they are no items in the cart.
-	// if (items.length === 0)
-	// 	(history.length === 2)
-	// 		? history.replace('/cart') 
-	// 		: history.goBack('');
+	if (items.length === 0)
+		(history.length === 2)
+			? history.replace('/cart') 
+			: history.goBack('');
 
 	const total = getTotal();
 

@@ -39,7 +39,7 @@ const Account = () => {
 					<section>
 						<H4 className="mb-2" bold>Account Information</H4>
 						{['name', 'email'].map((bioProp) => {
-							return <div className="w-full flex py-1 max-w-sm">
+							return <div key={bioProp} className="w-full flex py-1 max-w-sm">
 								<b className="w-1/5">{capitalize(bioProp)}</b> &#x2014; 
 								<span className="ml-4">{user[bioProp]}</span>
 							</div>

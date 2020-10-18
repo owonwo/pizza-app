@@ -1,10 +1,11 @@
 import React from "react";
-import { useLocation } from 'react-router-dom'
-import styled from "@wigxel/react-components";
 import { Link } from "react-router-dom";
+import styled from "@wigxel/react-components";
+import { useLocation } from 'react-router-dom'
+import { Grid, ShoppingCart, User } from "react-feather";
+
 import { ThemeToggle } from "./Buttons";
 import { useLayout } from "../libs/LayoutStore";
-import { Grid, ShoppingCart, User, List } from "react-feather";
 import Logo from '../assets/images/white-logo.svg';
 import DarkLogo from '../assets/images/dark-variant.svg';
 import { useStore } from "../stores/CartStore";
@@ -58,13 +59,11 @@ export const Nav = ({ className = '' }) => {
           route: isAuthenticated ? '/account': "/login",
         },
       ].map((e, idx) => (
-        <Link to={e.route}>
-          <a title={e.text} href={e.route}>
-            <li key={idx} className={`${e.route === location.pathname ? 'text-primary' : ''} px-2 inline-flex flex-col mx-4 items-center`}>
-              {<e.Icon />}
-              <span className="text-xs font-bold">{e.text}</span>
-            </li>
-          </a>
+        <Link to={e.route} key={e.text} title={e.text}>
+          <li key={idx} className={`${e.route === location.pathname ? 'text-primary' : ''} px-2 inline-flex flex-col mx-4 items-center`}>
+            {<e.Icon />}
+            <span className="text-xs font-bold">{e.text}</span>
+          </li>
         </Link>
       ))}
     </nav>
