@@ -1,13 +1,10 @@
 import React from "react";
-import { FAKE_PIZZA_IMAGE_URL } from "../libs/data/constants";
 import PizzaCard from "../components/PizzaCard";
 import Layout from "./Layout";
-import useCart from '../hooks/useCart'
 import { H1, P } from "@wigxel/react-components/lib/typography";
 import { useProducts } from '../hooks/useProducts';
 
 export const Menu = () => {
-  useCart();
 	const { products: pizzas = [] } = useProducts();
 
   return (
@@ -25,7 +22,7 @@ export const Menu = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 w-full mt-4">
           {pizzas
             .map((e) => {
-              return <PizzaCard {...e} />;
+              return <PizzaCard key={e.getId()} {...e} />;
             })}
         </div>
       </div>

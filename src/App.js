@@ -10,10 +10,9 @@ import Cart from "./views/Cart";
 import Account from "./views/Account";
 import Shipping from "./views/Shipping";
 import { Provider as CartProvider } from "./stores/CartStore";
-import { Provider as AuthProvider, actions, useDispatch } from "./stores/AuthStore";
-import useAuth from './hooks/useAuth';
-import { AUTH_USER_KEY } from './libs/constants';
+import { Provider as AuthProvider } from "./stores/AuthStore";
 import { Modal } from '@wigxel/react-components/lib/cards';
+import HydrateUserAndCart from './components/HydrateUserAndCart';
 
 const App = () => {
   return (
@@ -30,7 +29,7 @@ const App = () => {
 		              <Route exact path="/account" component={Account} />
 		              <Route path="/" component={Menu} />
 		            </Switch>
-		            <LoadAuthUser />
+		            <HydrateUserAndCart />
 	          	</Modal.Provider>
 	          </Router>
 	        </ThemeProvider>
@@ -39,23 +38,5 @@ const App = () => {
     </CartProvider>
   );
 };
-
-const LoadAuthUser = () => {
-	const { hasToken } = useAuth();
-	const dispatch = useDispatch();
-
-	React.useEffect(() => {
-		// hydrates the auth user on reload
-		if (hasToken()) {
-			const payload = JSON.parse(localStorage.getItem(AUTH_USER_KEY));
-			dispatch({
-				type: actions.SET_USER,
-				payload: payload?.user
-			})
-		}
-	}, [dispatch, hasToken])
-
-	return <React.Fragment />
-}
 
 export default App;
