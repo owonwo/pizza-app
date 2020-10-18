@@ -24,9 +24,10 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/products', 'ProductController@index');
 
-Route::
-    get('/orders', 'UserController@orders')
-    ->middleware(['auth:sanctum']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/me', 'UserController@getAuthUser');
+    Route::get('/orders', 'UserController@orders');
+});
 
 Route::any('{url?}/{sub_url?}', function () {
     return response()->json(['message' => 'Not Found'], 404);

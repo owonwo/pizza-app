@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 class UserController extends Controller
 {
+    public function getAuthUser()
+    {
+        return response()->json(
+            auth()->user()->toArray(),
+            200
+        );
+    }
+
     public function orders()
     {
         $user = auth()->user();
