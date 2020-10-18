@@ -7,12 +7,11 @@ import { MinusCircle, PlusCircle, Trash, ArrowLeft } from "react-feather";
 import { H1, H3, P } from "@wigxel/react-components/lib/typography";
 import { useDispatch, actions } from "../stores/CartStore";
 
-
 // TODO: Notification Stack. 
 // Show Notification when a user adds an item to the cart
 export const Cart = () => {
 	const history = useHistory();
-  const { items, deliveryFee, getTotal } = useCart()
+  const { items, getTotal } = useCart()
   const total = getTotal();
 
   return (
