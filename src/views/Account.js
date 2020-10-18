@@ -24,16 +24,17 @@ const Account = () => {
 		<div className="py-4 md:py-12 px-4">
 			{!user ?
 				(<div>Loading...</div>)
-			: (<Stack>
+			: (<Stack className="select-none">
 					<div className="flex flex-col md:flex-row md:justify-between md:items-center">
 						<div className="mb-4 md:mb-0">
 							<H3>Hello, <b>{user.name.split(' ')[0]}</b></H3>
 						</div>
-						<Button outline primary className="px-2"
+						<button
+							className="border-mix rounded-lg border flex py-2 px-4"
 							onClick={() => logoutUser().then(() => history.replace('/login'))}>
 							<LogOut /> 
 							<span className="font-bold pl-2">Logout</span>
-						</Button>
+						</button>
 					</div>
 
 					<section>
