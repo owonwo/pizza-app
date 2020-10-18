@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal } from '@wigxel/react-components/lib/cards';
 import { Labelled } from "@wigxel/react-components/lib/form";
 import { Button } from '@wigxel/react-components/lib/buttons';
-import { H1, H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
+import { H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
 
 
 import Layout from "./Layout";

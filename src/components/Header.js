@@ -4,10 +4,11 @@ import styled from "@wigxel/react-components";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "./Buttons";
 import { useLayout } from "../libs/LayoutStore";
-import { Grid, ShoppingCart, User } from "react-feather";
+import { Grid, ShoppingCart, User, List } from "react-feather";
 import Logo from '../assets/images/white-logo.svg';
 import DarkLogo from '../assets/images/dark-variant.svg';
 import { useStore } from "../stores/CartStore";
+import { useStore as useAuthStore } from "../stores/AuthStore";
 
 export const HeaderStyle = styled.header`
   z-index: 6;
@@ -24,8 +25,9 @@ export const HeaderStyle = styled.header`
 `;
 
 export const Nav = ({ className = '' }) => {
-	const { items: cartItems = [] } = useStore();
 	const location = useLocation()
+	const { isAuthenticated } = useAuthStore(); 
+	const { items: cartItems = [] } = useStore();
 
 	return (
 		<nav className={`${className} sec-nav flex items-center`}>
@@ -52,12 +54,12 @@ export const Nav = ({ className = '' }) => {
         },
         {
           Icon: User,
-          text: "Account",
-          route: "/login",
+          text: isAuthenticated ? "Account" : "Login",
+          route: isAuthenticated ? '/account': "/login",
         },
       ].map((e, idx) => (
         <Link to={e.route}>
-          <a>
+          <a title={e.text} href={e.route}>
             <li key={idx} className={`${e.route === location.pathname ? 'text-primary' : ''} px-2 inline-flex flex-col mx-4 items-center`}>
               {<e.Icon />}
               <span className="text-xs font-bold">{e.text}</span>
