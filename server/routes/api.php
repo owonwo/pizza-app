@@ -18,4 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', 'AuthController@login')->name('login');
+
+Route::post('/register', 'AuthController@register');
+
 Route::get('/products', 'ProductController@index');
+
+Route::
+    get('/orders', 'UserController@orders')
+    ->middleware(['auth:sanctum']);
+
+Route::any('{url?}/{sub_url?}', function () {
+    return response()->json(['message' => 'Not Found'], 404);
+})->name('api.404.fallback');
