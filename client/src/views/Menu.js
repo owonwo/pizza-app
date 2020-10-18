@@ -4,10 +4,11 @@ import PizzaCard from "../components/PizzaCard";
 import Layout from "./Layout";
 import useCart from '../hooks/useCart'
 import { H1, P } from "@wigxel/react-components/lib/typography";
-import { PizzaFactory } from '../libs/factories';
+import { useProducts } from '../hooks/useProducts';
 
 export const Menu = () => {
   useCart();
+	const { products: pizzas = [] } = useProducts();
 
   return (
     <Layout>
@@ -22,13 +23,7 @@ export const Menu = () => {
         </P>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 w-full mt-4">
-          {Array(30)
-            .fill({
-              price: 50.23,
-              name: "Something Pizza",
-              image: FAKE_PIZZA_IMAGE_URL,
-            })
-            .map(PizzaFactory)
+          {pizzas
             .map((e) => {
               return <PizzaCard {...e} />;
             })}

@@ -1,9 +1,9 @@
 export const PizzaFactory = (props, idx) => {
   return {
   	getId() {
-  		return this.$$index;
+  		return this.id;
   	},
-    id: Symbol("pizza"),
+    id: props.id,
     $$index: "pizza.item--" + idx,
     ...props,
   };
