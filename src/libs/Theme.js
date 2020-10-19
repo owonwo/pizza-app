@@ -4,17 +4,13 @@ const Generic = {
 		primary: "#68d391",
     accent: "#DABAE5",
     background: "#FFFFFF",
-    surface: "white",
-    notification: "#f50057",
-    text: "#334D6E",
-    white: "#FFFFFF",
     _1: "#333333",
     _2: "#535353",
-    _3: "#F3F3F3", // whitesmoke
-    _4: "#F15887",
-    _5: "#6B6B6B",
+    _3: "#F3F3F3", // White Smoke
+    _4: "#68d391", // Vibrant Green
+    _5: "#333333",
     _6: "#F0A6BD",
-    _7: "#CDEBFF",
+    _7: "#e26b00", // Orange
     _8: "#DEFFC5",
     shadow: "rgba(0,0,0,.16)",
     coloredShadow: "rgba(234, 138, 138, 0.16)",

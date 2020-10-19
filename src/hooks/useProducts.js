@@ -7,6 +7,7 @@ export const useProducts = () => {
 	const fetch = useFetch(BASE_URL + '/api/products', {}, []);
 
 	return {
+		...fetch,
 		products: fetch?.data?.data.map(PizzaFactory) || []
 	}
 }
