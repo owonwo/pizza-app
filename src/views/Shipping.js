@@ -1,6 +1,8 @@
 import React from 'react';
+import * as R from 'ramda';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { trace } from '@wigxel/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal } from '@wigxel/react-components/lib/cards';
 import { Labelled } from "@wigxel/react-components/lib/form";
@@ -12,6 +14,7 @@ import { showErrMessageIfAny } from '../components/FormHelpers';
 
 import Layout from "./Layout";
 import useCart from '../hooks/useCart';
+import { useStore as useAuthStore } from '../stores/AuthStore';
 
 const noDigits = (evt) => {
 	if (evt.nativeEvent.code.includes("Digit")) return evt.preventDefault();
@@ -19,10 +22,11 @@ const noDigits = (evt) => {
 
 export default function Shipping () {
 	const history = useHistory();
+	const { user } = useAuthStore();
 	const { toggle } = Modal.useModal();
 	const { items, deliveryFee, getTotal, clearCart } = useCart();
 
-	const { register, errors, watch, formState } = useForm({
+	const { register, errors, watch, setValue, formState } = useForm({
 		resolver: yupResolver(deliverySchema),
 		mode: "onChange",
 		defaultValues: {
@@ -48,6 +52,14 @@ export default function Shipping () {
 		toggle('order-placed');
 		// clearCart();
 	}
+
+	React.useEffect(() => {
+		R.compose(
+			R.map(([key, value], idx) => setValue(key, value, false)),
+			R.toPairs,
+			R.pick(['name', 'email', 'phone']),
+		)(user || { })
+	}, [ user ]);
 
 
 	return <Layout>
