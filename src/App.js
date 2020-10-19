@@ -8,6 +8,7 @@ import { Light } from "./libs/Theme";
 import Menu from "./views/Menu";
 import Cart from "./views/Cart";
 import Account from "./views/Account";
+import Register from "./views/Register";
 import Shipping from "./views/Shipping";
 import { Provider as CartProvider } from "./stores/CartStore";
 import { Provider as AuthProvider } from "./stores/AuthStore";
@@ -23,10 +24,11 @@ const App = () => {
 	          <Router>
 	          	<Modal.Provider>
 		            <Switch>
+		              <Route exact path="/register" component={Register} />
 		              <Route exact path="/login" component={Login} />
 		              <Route exact path="/cart" component={Cart} />
 		              <Route exact path="/shipping" component={Shipping} />
-		              <Route exact path="/account" component={Account} />
+		              <Route path="/account" component={Account} />
 		              <Route path="/" component={Menu} />
 		            </Switch>
 		            <HydrateUserAndCart />

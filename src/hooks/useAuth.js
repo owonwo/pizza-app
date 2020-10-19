@@ -44,6 +44,28 @@ const useAuth = () => {
    	return Promise.reject(Error('Login Failed'));
   };
 
+  const registerUser = async (formData) => {
+  	// clear Errors
+  	setError({ ...errors, register: false });
+
+  	// try login
+    const payload = await fetch.post('/register', formData)
+
+    if (fetch.response.ok) {
+      localStorage.setItem(AUTH_TOKEN_KEY, payload.access_token);
+      dispatch({
+      	type: actions.SET_USER,
+      	payload: await getAuthUser()
+      });
+      setError({ ...errors, register: false })
+      return Promise.resolve('Login Successful');
+    }
+
+    if (payload.message)
+    	setError({ ...errors, register: payload.message });
+   	return Promise.reject(Error('Registration Failed'));
+  };
+
   const getAuthUser = async () => {
     const payload = await fetch.get('/me');
     if (fetch.response.ok) {
@@ -62,6 +84,7 @@ const useAuth = () => {
 
   return {
     getAuthUser,
+    registerUser,
     logoutUser,
     loginUser,
     hasToken,

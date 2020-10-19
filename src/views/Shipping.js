@@ -1,5 +1,4 @@
 import React from 'react';
-import * as yup from "yup";
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,34 +6,12 @@ import { Modal } from '@wigxel/react-components/lib/cards';
 import { Labelled } from "@wigxel/react-components/lib/form";
 import { Button } from '@wigxel/react-components/lib/buttons';
 import { H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
+import { deliverySchema } from '../libs/validators';
+import { showErrMessageIfAny } from '../components/FormHelpers';
 
 
 import Layout from "./Layout";
 import useCart from '../hooks/useCart';
-
-
-const schema = yup.object().shape({
-  name: yup.string().min(2).required('Name is a required'),
-  email: yup.string()
-  	.email('Please provide a valid email address')
-  	.lowercase()
-  	.required('Email Address is required'),
-  phone: yup.string()
-  	.min(3)
-  	.required("Phone number field is required."),
-  zipcode: yup.number()
-  	.min(6)
-  	.required("Please enter a valid ZIP code."),
-  delivery_address: yup.string().required("You didn't provide a delivery address.")
-});
-
-
-const showErrMessageIfAny = (field, errors) => {
-	if (errors[field]) {
-		return <div className="px-4 text-right text-red text-sm">{errors[field].message}</div>
-	}
-	return null;
-}
 
 const noDigits = (evt) => {
 	if (evt.nativeEvent.code.includes("Digit")) return evt.preventDefault();
@@ -46,7 +23,7 @@ export default function Shipping () {
 	const { items, deliveryFee, getTotal, clearCart } = useCart();
 
 	const { register, errors, watch, formState } = useForm({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(deliverySchema),
 		mode: "onChange",
 		defaultValues: {
 			// name: "John Snow",
