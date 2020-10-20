@@ -135,7 +135,7 @@ export default function Shipping () {
 					clearCart()
 					history.push('/')
 				}}>
-				Goto Menu
+				Go To Menu
 			</Button>
 			</div>
 		</Modal>
