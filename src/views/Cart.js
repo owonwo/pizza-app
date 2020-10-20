@@ -1,11 +1,12 @@
 import React from "react";
+import { Trash, ArrowLeft } from "react-feather";
 import Layout from "./Layout";
 import useCart from '../hooks/useCart';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@wigxel/react-components/lib/buttons';
-import { MinusCircle, PlusCircle, Trash, ArrowLeft } from "react-feather";
 import { H1, H3, P } from "@wigxel/react-components/lib/typography";
 import { useDispatch, actions } from "../stores/CartStore";
+import Quantity from '../components/Quantity'
 
 // TODO: Notification Stack. 
 // Show Notification when a user adds an item to the cart
@@ -100,31 +101,13 @@ const CartItem = (e) => {
         	onClick={removeItem}>
       		<Trash size={15} /> &nbsp; REMOVE
       	</button>
-        <Quantity value={+quantity}
+        <Quantity 
+        	value={+quantity}
         	onIncrement={() => setQuantity(quantity + 1)}
         	onDecrement={() => quantity >= 2 ? setQuantity(quantity - 1) : removeItem()}
         	/>
       </section>
     </div>
-  )
-}
-
-const Quantity = (props) => {
-	return (
-		<span className="inline-flex self-end py-2">
-
-      <button type="button" aria-label="Decrement Quantity"
-      	className={props.value === 1 && 'opacity-50'} onClick={props.onDecrement}>
-        <MinusCircle />
-      </button>
-
-      <span className="px-4">{props.value}</span>
-
-      <button type="button" aria-label="Increment Quantity"  onClick={props.onIncrement}>
-        <PlusCircle />
-      </button>
-
-    </span>
   )
 }
 

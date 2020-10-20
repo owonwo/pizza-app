@@ -4,6 +4,7 @@ import styled from "styled-components";
 import HideReveal from "./Typography/HideReveal";
 import { useDispatch, useStore } from "../stores/CartStore";
 import { Check, Plus } from "react-feather";
+import Quantity from './Quantity'
 
 const setColor = props => props.theme.colors._3 || '#333';
 
@@ -30,6 +31,7 @@ const StyledCard = styled.div`
 
 export const PizzaCard = (props) => {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = React.useState(1);
   const { items = [] } = useStore();
 
   const inCart = items.findIndex((a) => a.getId() === props.getId()) !== -1;
@@ -52,19 +54,26 @@ export const PizzaCard = (props) => {
 	        	{props.description}
 	        </p>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <P className="font-bold price-tag text-xl">$ {props.price}</P>
+        <div className="flex flex-col">
+        	<div className="flex justify-between items-center my-2">
+	          <P className="font-bold price-tag text-xl">$ {props.price}</P>
+	          <Quantity 
+	          	value={quantity}
+	          	onIncrement={() => setQuantity(quantity + 1)}
+	          	onDecrement={() => quantity >= 2 && setQuantity(quantity - 1)} />
+          </div>
           {inCart ? (
             <span className="in-cart w-full md:w-auto border py-2 px-2 flex items-center justify-center rounded-lg">
               <Check size={15} /> <span className="ml-2">Added</span>
             </span>
           ) : (
             <button
-              className="outline-none w-full md:w-auto flex items-center justify-center  border px-2 py-2 border-mix rounded-lg"
+              className="outline-none w-full md:w-auto flex items-center justify-center  border px-2 py-2 border-mix rounded-lg
+              	hover:border-gray-800"
               onClick={() => {
                 dispatch({
                   type: "ADD_TO_CART",
-                  payload: props,
+                  payload: { ...props, quantity },
                 });
               }}
             >
