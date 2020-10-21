@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { trace } from '@wigxel/utils';
+// import { trace } from '@wigxel/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal } from '@wigxel/react-components/lib/cards';
 import { Labelled } from "@wigxel/react-components/lib/form";
@@ -50,7 +50,6 @@ export default function Shipping () {
 	const total = getTotal();
 
 	const makeOrderRequest = (formData) => {
-		console.log('Shipping Info', formData)
 		toggle('order-placed');
 		// clearCart();
 	}
@@ -76,21 +75,26 @@ export default function Shipping () {
 				<Labelled.Input ref={register} type="text" fullwidth name="email" label="Email Address •" placeholder="john.snow@domain.com"
 					inputmode="email"
 					message={showErrMessageIfAny('email', errors)}/>
-				<Labelled.Number ref={register} type="number" fullwidth name="phone" 
+				<Labelled.Number ref={register} type="number" fullwidth 
+				  name="phone" 
 					label="Phone Number •" 
 					placeholder="+ 20 398 2039"
 					inputmode="tel"
 					style={{ textAlign: "left" }}
 					message={showErrMessageIfAny('phone', errors)}
 					/>
-					<Labelled.Number ref={register} type="number" fullwidth name="zipcode" 
-					label="ZIP Code •" 
-					placeholder="500238"
-					inputmode="tel"
-					style={{ textAlign: "left" }}
-					message={showErrMessageIfAny('phone', errors)}
+					<Labelled.Number ref={register} 
+						type="number" 
+						fullwidth 
+						name="zipcode" 
+						label="ZIP Code •" 
+						placeholder="500238"
+						inputmode="tel"
+						style={{ textAlign: "left" }}
+						message={showErrMessageIfAny('zipcode', errors)}
 					/>
-				<div  fullwidth className="pt-1" />
+
+				<div fullwidth className="pt-1" />
 				<Labelled.Textarea ref={register} fullwidth name="delivery_address" label="Delivery Address •" 
 					placeholder="Enter your full address here." 
 					message={showErrMessageIfAny('delivery_address', errors)}

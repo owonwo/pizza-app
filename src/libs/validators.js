@@ -13,7 +13,7 @@ const userInfoSchema = {
 
 export const deliverySchema = yup.object().shape({
   ...userInfoSchema,
-  zipcode: yup.number()
+  zipcode: yup.string()
   	.min(6)
   	.required("Please enter a valid ZIP code."),
   delivery_address: yup.string().required("You didn't provide a delivery address.")
