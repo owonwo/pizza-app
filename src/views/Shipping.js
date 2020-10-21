@@ -74,7 +74,6 @@ export default function Shipping () {
 					onKeyDown={noDigits}
 					message={showErrMessageIfAny('name', errors)}/>
 				<Labelled.Input ref={register} type="text" fullwidth name="email" label="Email Address •" placeholder="john.snow@domain.com"
-					onKeyDown={noDigits} 
 					inputmode="email"
 					message={showErrMessageIfAny('email', errors)}/>
 				<Labelled.Number ref={register} type="number" fullwidth name="phone" 
