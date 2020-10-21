@@ -1,9 +1,11 @@
 import React from 'react';
 import * as R from 'ramda';
+import { Either } from 'ramda-fantasy';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 // import { trace } from '@wigxel/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Stack } from '@wigxel/react-components/lib/layout';
 import { Modal } from '@wigxel/react-components/lib/cards';
 import { Labelled } from "@wigxel/react-components/lib/form";
 import { Button } from '@wigxel/react-components/lib/buttons';
@@ -26,32 +28,38 @@ export default function Shipping () {
 	const { user } = useAuthStore();
 	const { toggle } = Modal.useModal();
 	const { formatPrice } = useCurrency();
-	const { items, deliveryFee, getTotal, clearCart } = useCart();
+	const { items, deliveryFee, getTotal, clearCart, placeOrder } = useCart();
 
-	const { register, errors, watch, setValue, formState } = useForm({
+	const { register, reset, errors, watch, setValue, getValues, formState } = useForm({
 		resolver: yupResolver(deliverySchema),
 		mode: "onChange",
 		defaultValues: {
-			// name: "John Snow",
-			// email: "Joseph.owonwo@wigxel.io",
-			// phone: "03203923",
-			// zipcode: '209823',
-			// delivery_address: "27 Kings Avenue, Porter Land, UK."
+			phone: "03203923",
+			zipcode: '209823',
+			delivery_address: "27 Kings Avenue, Porter Land, UK."
 		}
 	});
-	
+
+	const toggle_thunk = R.thunkify(toggle);	
 	// takes the user back to the Cart page
 	//  if they are no items in the cart.
-	if (items.length === 0)
-		(history.length === 2)
-			? history.replace('/cart') 
-			: history.goBack('');
+	// if (items.length === 0)
+	// 	(history.length === 2)
+	// 		? history.replace('/cart') 
+	// 		: history.goBack('');
 
 	const total = getTotal();
 
-	const makeOrderRequest = (formData) => {
-		toggle('order-placed');
-		// clearCart();
+	const makeOrderRequest = () => {
+		placeOrder(getValues())
+			.then(Either.either(
+				toggle_thunk('order-error'),
+				R.compose(
+					clearCart,
+					toggle_thunk('order-placed'),
+					reset,
+				)
+			))
 	}
 
 	React.useEffect(() => {
@@ -95,9 +103,14 @@ export default function Shipping () {
 					/>
 
 				<div fullwidth className="pt-1" />
-				<Labelled.Textarea ref={register} fullwidth name="delivery_address" label="Delivery Address •" 
-					placeholder="Enter your full address here." 
+
+				<Labelled.Textarea
+					ref={register}
+					name="delivery_address"
+					label="Delivery Address •"
+					placeholder="Enter your full address here."
 					message={showErrMessageIfAny('delivery_address', errors)}
+					fullwidth
 					/>
 				<div className="mt-4">
 				</div>
@@ -125,27 +138,48 @@ export default function Shipping () {
 					primary
       		className="w-full md:w-auto"
 					disabled={!formState.isValid}
-					onClick={makeOrderRequest}>
+					onClick={toggle_thunk('order-placed')}>
 					<span className="text-lg">Confirm Order</span>
 				</Button>
 			</div>
 		</div>
 
-		<Modal name="order-placed" size="sm"
-			onClose={() => {
-				clearCart()	
-			}}>
+		<Modal name="order-placed" size="sm">
 			<div className="py-12 w-5/6 mx-auto">
 			<H3 bold className="text-center mb-4">Order Placed</H3>
 			<P className="text-center text-sm mb-24">Your order was successfully placed. You should receive a corresponding email at {watch('email')}</P>
+			<Stack>
+				<Button
+					primary
+					fullwidth
+					onClick={() => {
+						history.push('/')
+					}}>
+					Go To Menu
+				</Button>
+				<Button
+					primary
+					fullwidth
+					onClick={() => {
+						history.push('/account')
+					}}>
+					See Orders
+				</Button>
+			</Stack>
+			</div>
+		</Modal>
+
+		<Modal name="order-error" size="sm">
+			<div className="py-12 w-5/6 mx-auto">
+			<H3 bold className="text-center mb-4 text-red">Something Went Wrong!</H3>
+			<P className="text-center text-sm mb-24">
+				We are unable to place your order at the moment. Please try again later.
+			</P>
 			<Button
 				primary
 				fullwidth
-				onClick={() => {
-					clearCart()
-					history.push('/')
-				}}>
-				Go To Menu
+				onClick={toggle_thunk('order-error')}>
+				Okay
 			</Button>
 			</div>
 		</Modal>
