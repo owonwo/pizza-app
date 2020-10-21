@@ -1,18 +1,21 @@
 import React from "react";
-import { Trash, ArrowLeft } from "react-feather";
-import Layout from "./Layout";
-import useCart from '../hooks/useCart';
 import { useHistory } from 'react-router-dom';
+import { Trash, ArrowLeft } from "react-feather";
 import { Button } from '@wigxel/react-components/lib/buttons';
 import { H1, H3, P } from "@wigxel/react-components/lib/typography";
-import { useDispatch, actions } from "../stores/CartStore";
+
+import Layout from "./Layout";
+import useCart from '../hooks/useCart';
 import Quantity from '../components/Quantity'
+import useCurrency from '../hooks/useCurrency';
+import { useDispatch, actions } from "../stores/CartStore";
 
 // TODO: Notification Stack. 
 // Show Notification when a user adds an item to the cart
 export const Cart = () => {
 	const history = useHistory();
-  const { items, getTotal } = useCart()
+  const { items, getTotal } = useCart();
+  const { formatPrice } = useCurrency();
   const total = getTotal();
 
   return (
@@ -46,17 +49,18 @@ export const Cart = () => {
         		<H3>Total Billing</H3>
         	</div>
         	<div className="text-right">
-        		<H3 bold>$ {(total).toFixed(2)}</H3>
+        		<H3 bold>{formatPrice(total)}</H3>
         	</div>
         </div>
        	 <div className="flex justify-end py-4">
         	<Button
         		primary
+        		className="w-full md:w-auto"
         		disabled={items.length === 0}
         		onClick={() => history.push('/shipping')}
 	        		// IconRight={<ArrowRight size={20} className="ml-4"/>}>
 	        		>
-	        		Proceed to Checkout
+	        		<span className="text-lg">Proceed to Checkout</span>
 	        	</Button>
 	       </div>
       </div>
@@ -66,6 +70,7 @@ export const Cart = () => {
 
 const CartItem = (e) => {
 	const dispatch = useDispatch();
+	const { formatPrice } = useCurrency();
 	const quantity = e.quantity || 1;
 
 	const setQuantity = (quantity) => dispatch({
@@ -95,7 +100,7 @@ const CartItem = (e) => {
     	<section className="px-4 flex-1 flex flex-col justify-between">
       	<h1 className="text-lg">{e.name}</h1>
         <span>
-          $ {e.price}  &nbsp;/  &nbsp;<span className="opacity-50">${Number(e.price * quantity).toFixed(2)}</span>
+          {formatPrice(e.price)}  &nbsp;/  &nbsp;<span className="opacity-50">{formatPrice(e.price * quantity)}</span>
         </span>
         <button className="inline-flex  items-center outline-none text-sm hover:text-red self-start mt-4"
         	onClick={removeItem}>

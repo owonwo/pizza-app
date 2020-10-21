@@ -10,6 +10,7 @@ import { Button } from '@wigxel/react-components/lib/buttons';
 import { H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
 import { deliverySchema } from '../libs/validators';
 import { showErrMessageIfAny } from '../components/FormHelpers';
+import useCurrency from '../hooks/useCurrency';
 
 
 import Layout from "./Layout";
@@ -24,6 +25,7 @@ export default function Shipping () {
 	const history = useHistory();
 	const { user } = useAuthStore();
 	const { toggle } = Modal.useModal();
+	const { formatPrice } = useCurrency();
 	const { items, deliveryFee, getTotal, clearCart } = useCart();
 
 	const { register, errors, watch, setValue, formState } = useForm({
@@ -59,7 +61,7 @@ export default function Shipping () {
 			R.toPairs,
 			R.pick(['name', 'email', 'phone']),
 		)(user || { })
-	}, [ user ]);
+	}, [setValue, user]);
 
 
 	return <Layout>
@@ -107,13 +109,18 @@ export default function Shipping () {
         		<H3>Total Billing</H3>
         	</div>
         	<div className="text-right">
-        		<div>$ {total.toFixed(2)}</div>
-        		{watch('zipcode') ? <div>+ $ {deliveryFee}</div> : "--"}
-        		<H3 bold>$ {(total + deliveryFee).toFixed(2)}</H3>
+        		<div>{formatPrice(total)}</div>
+        		{watch('zipcode') ? <div>+ {formatPrice(deliveryFee)}</div> : "--"}
+        		<H3 bold>{
+        			watch('zipcode') ? 
+        			formatPrice(total + deliveryFee)
+        			: formatPrice(total) }</H3>
         	</div>
         </div>
 
-				<Button primary
+				<Button 
+					primary
+      		className="w-full md:w-auto"
 					disabled={!formState.isValid}
 					onClick={makeOrderRequest}>
 					<span className="text-lg">Confirm Order</span>

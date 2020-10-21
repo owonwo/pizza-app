@@ -2,9 +2,11 @@ import React from "react";
 import { P } from "@wigxel/react-components/lib/typography";
 import styled from "styled-components";
 import HideReveal from "./Typography/HideReveal";
-import { useDispatch, useStore } from "../stores/CartStore";
+import { useDispatch, useStore, actions } from "../stores/CartStore";
 import { Check, Plus } from "react-feather";
 import Quantity from './Quantity'
+import useCurrency from '../hooks/useCurrency';
+import useCart from '../hooks/useCart';
 
 const setColor = props => props.theme.colors._3 || '#333';
 
@@ -31,10 +33,9 @@ const StyledCard = styled.div`
 
 export const PizzaCard = (props) => {
   const dispatch = useDispatch();
+  const { inCart } = useCart();
+  const { formatPrice } = useCurrency();
   const [quantity, setQuantity] = React.useState(1);
-  const { items = [] } = useStore();
-
-  const inCart = items.findIndex((a) => a.getId() === props.getId()) !== -1;
 
   return (
     <StyledCard className=" p-2 relative cursor-pointer flex flex-col">
@@ -56,13 +57,13 @@ export const PizzaCard = (props) => {
         </div>
         <div className="flex flex-col">
         	<div className="flex justify-between items-center my-2">
-	          <P className="font-bold price-tag text-xl">$ {props.price}</P>
+	          <P className="font-bold price-tag text-xl">{formatPrice(props.price)}</P>
 	          <Quantity 
 	          	value={quantity}
 	          	onIncrement={() => setQuantity(quantity + 1)}
 	          	onDecrement={() => quantity >= 2 && setQuantity(quantity - 1)} />
           </div>
-          {inCart ? (
+          {inCart(props.getId()) ? (
             <span className="in-cart w-full md:w-auto border py-2 px-2 flex items-center justify-center rounded-lg">
               <Check size={15} /> <span className="ml-2">Added</span>
             </span>
@@ -75,6 +76,7 @@ export const PizzaCard = (props) => {
                   type: "ADD_TO_CART",
                   payload: { ...props, quantity },
                 });
+              	setQuantity(1)
               }}
             >
               <Plus size={15} className="mr-2" /> <HideReveal text="Add To Cart" />

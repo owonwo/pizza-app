@@ -6,7 +6,7 @@ export const Quantity = (props) => {
 		<span className="inline-flex self-end py-2">
 
       <button type="button" aria-label="Decrement Quantity"
-      	className={props.value === 1 && 'opacity-50'} onClick={props.onDecrement}>
+      	className={props.value === 1 ? 'opacity-50' : ''} onClick={props.onDecrement}>
         <MinusCircle />
       </button>
 

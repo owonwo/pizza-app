@@ -33,6 +33,9 @@ const reducer = (state, action) => {
 
 	    return R.over(indexLens, R.set(R.lensProp('quantity'), quantity), state);
 
+	  case actions.CURRENCY_AND_RATE:
+	  	return addToLS(R.set(R.lensProp('currency'), action.payload, state));
+
     default:
       return state;
   }
@@ -42,6 +45,10 @@ export const { useDispatch, Provider, useStore } = makeStore(
   {
   	hydrated: false,
     items: [],
+    currency: {
+    	symbol: 'USD',
+    	exchangeRate: 1,
+    }
   },
   reducer
 );
@@ -52,4 +59,9 @@ export const actions = {
   CLEAR_CART: "CLEAR_CART",
   REMOVE_ITEM: "REMOVE_ITEM",
   SET_ITEM_QUANTITY: "SET_ITEM_QUANTITY",
+  CURRENCY_AND_RATE: "CURRENCY_AND_RATE",
+  exchangePath: (store) => {
+  	console.log('Store', store)
+  	return R.path(['currency', 'rate'], store)
+  }
 };

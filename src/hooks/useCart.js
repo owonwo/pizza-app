@@ -10,6 +10,7 @@ const useCart = () => {
   	items,
   	deliveryFee,
   	clearCart: dispatch.curry('CLEAR_CART'),
+  	inCart: (item_id) => items.findIndex((a) => a.getId() === item_id) !== -1,
   	getTotal: () => items.reduce((alloc, e) => alloc + e.price * (e.quantity || 1), 0)
   }
 };

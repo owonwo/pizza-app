@@ -10,6 +10,7 @@ import Logo from '../assets/images/white-logo.svg';
 import DarkLogo from '../assets/images/dark-variant.svg';
 import { useStore } from "../stores/CartStore";
 import { useStore as useAuthStore } from "../stores/AuthStore";
+import CurrencySwitcher from './CurrencySwitcher';
 
 export const HeaderStyle = styled.header`
   z-index: 6;
@@ -82,7 +83,8 @@ export const Header = () => {
         <div className="flex-1 hidden md:block">
         	<Nav className="justify-end" />
         </div>
-       	<div>
+       	<div className="flex items-center">
+       		<CurrencySwitcher />
 		      {true && <ThemeToggle isDarkMode={store.isDarkMode} onClick={action({ type: 'TOGGLE_DARK_MODE'})} /> }
 		      <span className="text-xs font-bold"></span>
 		    </div>
