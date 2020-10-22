@@ -27,7 +27,7 @@ export default function Shipping () {
 	const history = useHistory();
 	const { user } = useAuthStore();
 	const { toggle } = Modal.useModal();
-	const { formatPrice } = useCurrency();
+	const { formatPrice, currency } = useCurrency();
 	const { items, deliveryFee, getTotal, clearCart, placeOrder } = useCart();
 
 	const { register, reset, errors, watch, setValue, getValues, formState } = useForm({
@@ -43,24 +43,12 @@ export default function Shipping () {
 	const toggle_thunk = R.thunkify(toggle);	
 	// takes the user back to the Cart page
 	//  if they are no items in the cart.
-	// if (items.length === 0)
-	// 	(history.length === 2)
-	// 		? history.replace('/cart') 
-	// 		: history.goBack('');
+	if (items.length === 0)
+		(history.length === 2)
+			? history.replace('/cart') 
+			: history.goBack('');
 
 	const total = getTotal();
-
-	const makeOrderRequest = () => {
-		placeOrder(getValues())
-			.then(Either.either(
-				toggle_thunk('order-error'),
-				R.compose(
-					clearCart,
-					toggle_thunk('order-placed'),
-					reset,
-				)
-			))
-	}
 
 	React.useEffect(() => {
 		R.compose(
@@ -69,6 +57,23 @@ export default function Shipping () {
 			R.pick(['name', 'email', 'phone']),
 		)(user || { })
 	}, [setValue, user]);
+
+	const onSuccess = R.compose(
+		clearCart,
+		toggle_thunk('order-placed'),
+		reset,
+	);
+
+	const onFailure = toggle_thunk('order-error');
+
+	const makeRequest = R.compose(
+		R.andThen(
+			Either.either(onFailure, onSuccess)
+		),
+		placeOrder,
+		R.set(R.lensProp('currency'), currency?.symbol),
+		getValues
+	)
 
 
 	return <Layout>
@@ -138,7 +143,7 @@ export default function Shipping () {
 					primary
       		className="w-full md:w-auto"
 					disabled={!formState.isValid}
-					onClick={toggle_thunk('order-placed')}>
+					onClick={makeRequest}>
 					<span className="text-lg">Confirm Order</span>
 				</Button>
 			</div>

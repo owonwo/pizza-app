@@ -14,13 +14,14 @@ const IdQuantityPair = R.compose(
 const useCart = () => {
   const { items } = useStore();
   const dispatch = useDispatch();
- 	const base = useFetch(BASE_URL + '/api/place-order', { }, []);
+ 	const base = useFetch(BASE_URL + '/api/place-order', { });
 
  	const deliveryFee = 25;
 
 
 	// placeOrder :: FormData -> Promise(e a -> Either)
 	const placeOrder = async (formData) => {
+		base.cache.clear();
 		const payload = await base.post(trace('FormData')({ 
 			...formData,
 			product_ids: R.map(IdQuantityPair, items)

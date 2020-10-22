@@ -1,25 +1,12 @@
 import React from "react";
-// import { log } from "@wigxel/utils";
 import useFetch from 'use-http';
 import { actions, useDispatch } from '../stores/AuthStore';
 import { BASE_URL, AUTH_TOKEN_KEY, AUTH_USER_KEY } from '../libs/constants';
-
-
-const getToken = () => localStorage.getItem(AUTH_TOKEN_KEY);
-const hasToken = () => !!getToken();
+import { hasToken } from '../libs/utils';
 
 const useAuth = () => {
 	const dispatch = useDispatch();
-  const fetch = useFetch(BASE_URL + '/api', {
-  	interceptors: {
-  		request({ options }) {
-  			if (hasToken())
-  				options.headers.Authorization = `Bearer ${getToken()}`;
-
-  			return options;
-  		}
-  	}
-  });
+  const fetch = useFetch(BASE_URL + '/api');
   const [errors, setError] = React.useState({ login: null });
 
   const loginUser = async ({ email, password }) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { P } from "@wigxel/react-components/lib/typography";
 import styled from "styled-components";
 import HideReveal from "./Typography/HideReveal";
-import { useDispatch, useStore, actions } from "../stores/CartStore";
+import { useDispatch } from "../stores/CartStore";
 import { Check, Plus } from "react-feather";
 import Quantity from './Quantity'
 import useCurrency from '../hooks/useCurrency';

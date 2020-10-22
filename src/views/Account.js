@@ -1,17 +1,22 @@
 import React from 'react';
 import { LogOut } from 'react-feather';
-import { useHistory } from 'react-router-dom';
 import capitalize from 'lodash/capitalize';
+import { useHistory } from 'react-router-dom';
+
 import Layout from "./Layout";
 import  useAuth from '../hooks/useAuth';
+import  useOrders from '../hooks/useOrders';
+import LinearLoader from '../components/LinearLoader';
+import { Stack } from '@wigxel/react-components/lib/layout';
 import  { useStore as useAuthStore } from '../stores/AuthStore';
 import { H3, H4 } from '@wigxel/react-components/lib/typography';
-import { Button } from '@wigxel/react-components/lib/buttons';
-import { Stack } from '@wigxel/react-components/lib/layout';
+import { Collapsible } from '@wigxel/react-components/lib/lists';
 
 const Account = () => {
 	const history = useHistory();
 	const { user } = useAuthStore();
+	const { data = [], loading, response } = useOrders();
+
 	const { hasToken, logoutUser } = useAuth();
 
 	React.useEffect(() => {
@@ -46,12 +51,54 @@ const Account = () => {
 							</div>
 						})}
 					</section>
-
-					<H4 bold>Order History - 30</H4>
+					<LinearLoader>
+						<H4 bold>Order History - {data?.length || 0}</H4>
+						{loading && <LinearLoader.Loader />}
+						<div className="mt-4">
+							{response.ok && data.map((e, idx) => <RenderHistory key={idx} {...e} />)}
+						</div>
+					</LinearLoader>
 				</Stack>)
 			}
 		</div>
 	</Layout>
+}
+
+const RenderHistory = (e) => {
+	const [state, setState] = React.useState(false);
+
+	return (
+		<li className="block border-mix py-2 border-b border-mix mb-0">
+			<div className="flex justify-between w-full items-center">
+				<span className="whitespace-no-wrap">Delivery To:</span>
+				<div className="text-right">
+					<span className="block text-blue-400 text-xs">{e.status}</span>
+					<span className="block text-xs">{e.toNow()}</span>
+				</div>
+			</div>
+			<section className="flex flex-col mb-4">
+				<div className="text-lg font-bold">{e.name}</div>
+				<div>{e.email}</div>
+			</section>
+			<section>
+				<Collapsible open={state}>
+					{(e.products || []).map((e, idx) => (
+						<li key={idx} className="py-1 flex items-center">
+							<span className="mx-2">{idx + 1}.</span>
+							<img 
+								src={e.product.image}
+								className="w-8 h-8 object-cover rounded-lg overflow-hidden mx-2"
+								alt={e.product.name} />
+							<span className="mx-2">{e.quantity || 1}x {e.product.name}</span>
+						</li>
+					))}
+				</Collapsible>
+				<button className="border py-1 w-full mt-2" onClick={() => setState(!state)}>
+					See Ordered Pizzas - {e.products?.length || 0}
+				</button>
+			</section>
+		</li>
+	);
 }
 
 export default Account;
