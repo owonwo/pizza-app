@@ -19,6 +19,14 @@ export const deliverySchema = yup.object().shape({
   delivery_address: yup.string().required("You didn't provide a delivery address.")
 });
 
+export const loginSchema = yup.object().shape({
+	email: yup.string()
+  	.email('Please provide a valid email address')
+  	.lowercase()
+  	.required('Email Address is required'),
+	password: yup.string().required('Password field is required'),
+})
+
 export const registerSchema = yup.object().shape({
 	...userInfoSchema,
 	password: yup.string().required('Password field is required'),

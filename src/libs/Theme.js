@@ -37,6 +37,7 @@ export const Dark = {
 		...Generic.colors,
 		_2: "#fcfcfc",
 		primary: "#ed8936",
+		accent: "#68d391"
 	},
 	bgColor: "#333",
 	textColor: "#333",

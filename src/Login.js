@@ -2,16 +2,24 @@ import React from "react";
 import { useHistory, Redirect, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Layout from './views/Layout';
+import useAuth from './hooks/useAuth'
+import { ButtonLoader } from './components/Buttons';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Labelled } from "@wigxel/react-components/lib/form";
 import { Alert } from "@wigxel/react-components/lib/alert";
 import { Button } from "@wigxel/react-components/lib/buttons";
 import { H2 } from "@wigxel/react-components/lib/typography";
-import useAuth from './hooks/useAuth'
+import { useErrors } from './components/FormHelpers';
+import { loginSchema } from './libs/validators';
 
 const Login = () => {
 	const history = useHistory();
-	const { register, getValues } = useForm();
-	const { loginUser, hasToken, signedIn, errors } = useAuth()
+	const { register, getValues, errors: formErrors } = useForm({
+		mode: 'onChange',
+		resolver: yupResolver(loginSchema),
+	});
+	const { loginUser, loading, hasToken, signedIn, errors } = useAuth()
+	const showErrMessageIfAny = useErrors(formErrors);
 
 	React.useEffect(() => {
 		// redirect to `/account` if user is authenticated.
@@ -42,7 +50,8 @@ const Login = () => {
 		  			ref={register} 
 		  			name="email" 
 		  			type="text" 
-		  			label="Email Address" 
+		  			label="Email Address"
+		  			message={showErrMessageIfAny('email')}
 		  			fullwidth
 		  			onBlur={() => {}} />
 		  		<Labelled.Input 
@@ -51,12 +60,17 @@ const Login = () => {
 		  			type="password" 
 		  			label="Password" 
 		  			fullwidth 
+		  			message={showErrMessageIfAny('password')}
 		  			onBlur={() => {}} />
 		  		<div className="" />
-		  		<Button 
+		  		<ButtonLoader
+		  			Button={Button}
+		  			loading={loading}
 		  			primary
 		  			fullwidth
-		  			onClick={doLogin}>LOGIN</Button>
+		  			onClick={doLogin}>
+		  			<span className="text-base tracking-widest">LOGIN</span>
+		  		</ButtonLoader>
 		  		</div>
 	  		</div>
   	</Layout>

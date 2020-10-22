@@ -14015,6 +14015,20 @@ body {
   object-fit: cover;
 }
 
+.spinner {
+  animation: spinner 2s infinite forwards running 0s;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

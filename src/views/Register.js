@@ -9,7 +9,8 @@ import { Button } from "@wigxel/react-components/lib/buttons";
 import { H2 } from "@wigxel/react-components/lib/typography";
 import useAuth from '../hooks/useAuth'
 import { registerSchema } from '../libs/validators';
-import { showErrMessageIfAny } from '../components/FormHelpers';
+import { ButtonLoader } from '../components/Buttons';
+import { useErrors } from '../components/FormHelpers';
 
 
 const Register = () => {
@@ -18,7 +19,8 @@ const Register = () => {
 		mode: "onChange",
 		resolver: yupResolver(registerSchema)
 	});
-	const { registerUser, hasToken, signedIn, errors } = useAuth()
+	const showErrMessageIfAny = useErrors(formErrors);
+	const { registerUser, hasToken, signedIn, errors, loading } = useAuth()
 
 	React.useEffect(() => {
 		// redirect to `/account` if user is authenticated.
@@ -55,15 +57,19 @@ const Register = () => {
 			  			name={name} 
 			  			type={type} 
 			  			label={label} 
-			  			message={showErrMessageIfAny(name, formErrors)}
+			  			message={showErrMessageIfAny(name)}
 			  			fullwidth
 			  			onBlur={() => {}} />
 		  		))}
 		  		<div />
-		  		<Button 
+		  		<ButtonLoader
+		  			Button={Button}
+		  			loading={loading}
 		  			type="submit"
 		  			primary
-		  			fullwidth>LOGIN</Button>
+		  			fullwidth>
+		  			REGISTER
+		  		</ButtonLoader>
 		  	</form>
 	  	</div>
   	</Layout>

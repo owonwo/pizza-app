@@ -1,4 +1,5 @@
 import React from "react";
+import { Loader } from 'react-feather';
 import styled, { css } from "@wigxel/react-components";
 
 const ToggleButtonStyle = styled.button`
@@ -141,6 +142,15 @@ const StyledThemeToggle = styled.button`
 		`}
 	}
 `
+
+export const ButtonLoader = ({ Button, children, loading, ...props }) => {
+	return <Button {...props}>
+		<div className="flex items-center">
+			<span className="mr-2">{children}</span>
+			{loading && <Loader className="spinner"/>}
+		</div>
+	</Button>
+}
 
 export const ThemeToggle = (props) => {
 	return (

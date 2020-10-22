@@ -11,8 +11,9 @@ import { Labelled } from "@wigxel/react-components/lib/form";
 import { Button } from '@wigxel/react-components/lib/buttons';
 import { H2, H3, H4, P } from "@wigxel/react-components/lib/typography";
 import { deliverySchema } from '../libs/validators';
-import { showErrMessageIfAny } from '../components/FormHelpers';
+import { useErrors } from '../components/FormHelpers';
 import useCurrency from '../hooks/useCurrency';
+import { ButtonLoader } from '../components/Buttons';
 
 
 import Layout from "./Layout";
@@ -28,7 +29,7 @@ export default function Shipping () {
 	const { user } = useAuthStore();
 	const { toggle } = Modal.useModal();
 	const { formatPrice, currency } = useCurrency();
-	const { items, deliveryFee, getTotal, clearCart, placeOrder } = useCart();
+	const { items, deliveryFee, getTotal, clearCart, placingOrder, placeOrder } = useCart();
 
 	const { register, reset, errors, watch, setValue, getValues, formState } = useForm({
 		resolver: yupResolver(deliverySchema),
@@ -39,16 +40,10 @@ export default function Shipping () {
 			delivery_address: "27 Kings Avenue, Porter Land, UK."
 		}
 	});
+	const showErrMessageIfAny = useErrors(errors);
 
-	const toggle_thunk = R.thunkify(toggle);	
-	// takes the user back to the Cart page
-	//  if they are no items in the cart.
-	if (items.length === 0)
-		(history.length === 2)
-			? history.replace('/cart') 
-			: history.goBack('');
-
-	const total = getTotal();
+	const toggle_thunk = R.thunkify(toggle);
+	const total = getTotal(); 
 
 	React.useEffect(() => {
 		R.compose(
@@ -57,6 +52,15 @@ export default function Shipping () {
 			R.pick(['name', 'email', 'phone']),
 		)(user || { })
 	}, [setValue, user]);
+
+	React.useEffect(() => {
+		// takes the user back to the Cart page
+		//  if they are no items in the cart.
+		if (items.length === 0)
+			(history.length === 2)
+				? history.replace('/cart') 
+				: history.goBack('');		
+	}, [])
 
 	const onSuccess = R.compose(
 		clearCart,
@@ -84,17 +88,17 @@ export default function Shipping () {
 
 				<Labelled.Input ref={register} type="text" fullwidth name="name" label="Full Name •" placeholder="John Snow" 
 					onKeyDown={noDigits}
-					message={showErrMessageIfAny('name', errors)}/>
+					message={showErrMessageIfAny('name')}/>
 				<Labelled.Input ref={register} type="text" fullwidth name="email" label="Email Address •" placeholder="john.snow@domain.com"
 					inputmode="email"
-					message={showErrMessageIfAny('email', errors)}/>
+					message={showErrMessageIfAny('email')}/>
 				<Labelled.Number ref={register} type="number" fullwidth 
 				  name="phone" 
 					label="Phone Number •" 
 					placeholder="+ 20 398 2039"
 					inputmode="tel"
 					style={{ textAlign: "left" }}
-					message={showErrMessageIfAny('phone', errors)}
+					message={showErrMessageIfAny('phone')}
 					/>
 					<Labelled.Number ref={register} 
 						type="number" 
@@ -104,7 +108,7 @@ export default function Shipping () {
 						placeholder="500238"
 						inputmode="tel"
 						style={{ textAlign: "left" }}
-						message={showErrMessageIfAny('zipcode', errors)}
+						message={showErrMessageIfAny('zipcode')}
 					/>
 
 				<div fullwidth className="pt-1" />
@@ -114,7 +118,7 @@ export default function Shipping () {
 					name="delivery_address"
 					label="Delivery Address •"
 					placeholder="Enter your full address here."
-					message={showErrMessageIfAny('delivery_address', errors)}
+					message={showErrMessageIfAny('delivery_address')}
 					fullwidth
 					/>
 				<div className="mt-4">
@@ -139,13 +143,15 @@ export default function Shipping () {
         	</div>
         </div>
 
-				<Button 
+				<ButtonLoader
+					Button={Button}
+					loading={placingOrder}
 					primary
       		className="w-full md:w-auto"
 					disabled={!formState.isValid}
 					onClick={makeRequest}>
 					<span className="text-lg">Confirm Order</span>
-				</Button>
+				</ButtonLoader>
 			</div>
 		</div>
 
@@ -163,7 +169,7 @@ export default function Shipping () {
 					Go To Menu
 				</Button>
 				<Button
-					primary
+					accent
 					fullwidth
 					onClick={() => {
 						history.push('/account')

@@ -76,6 +76,7 @@ const useAuth = () => {
     loginUser,
     hasToken,
     errors,
+    loading: fetch.loading,
   };
 };
 

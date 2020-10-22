@@ -93,7 +93,7 @@ const CartItem = (e) => {
     	<figure>
     		<img 
     			src={e.image} 
-    			className="w-24 h-24 rounded-lg p-2 bg-mix" 
+    			className="w-24 h-24 rounded-lg p-2 bg-mix object-cover" 
     			alt={e.name} />
     	</figure>
 
