@@ -29,11 +29,9 @@ const Account = () => {
 		<div className="py-4 md:py-12 px-4">
 			{!user ?
 				(<div>Loading...</div>)
-			: (<Stack className="select-none">
-					<div className="flex flex-col md:flex-row md:justify-between md:items-center">
-						<div className="mb-4 md:mb-0">
-							<H3>Hello, <b>{user.name.split(' ')[0]}</b></H3>
-						</div>
+			: (<Stack large className="select-none">
+					<div className="flex justify-between items-center">
+						<H3>Hello, <b>{user.name.split(' ')[0]}</b></H3>
 						<button
 							className="border-mix rounded-lg border flex py-2 px-4"
 							onClick={() => logoutUser().then(() => history.replace('/login'))}>
@@ -55,6 +53,8 @@ const Account = () => {
 						<H4 bold>Order History - {data?.length || 0}</H4>
 						{loading && <LinearLoader.Loader />}
 						<div className="mt-4">
+							{(!loading && data.length === 0) 
+								&& <span className="italic opacity-75">You haven't place any order yet. All recent order information should appear here.</span>}
 							{response.ok && data.map((e, idx) => <RenderHistory key={idx} {...e} />)}
 						</div>
 					</LinearLoader>

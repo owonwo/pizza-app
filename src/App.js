@@ -52,8 +52,10 @@ const HttpProvider = ({ children }) => {
 
 	const FETCH_OPTIONS = {
 		interceptors: {
-			request({ options }) {
-				if (hasToken())
+			request({ options, url }) {
+				const isExchange = url.includes("https://api.exchangeratesapi.io");
+
+				if (hasToken() && !isExchange)
 					options.headers.Authorization = `Bearer ${getToken()}`;
 				return options;
 			},

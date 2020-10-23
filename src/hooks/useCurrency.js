@@ -35,10 +35,10 @@ const useCurrency = () => {
 		return Either.Right({ symbol, rate });
 	} 
 
-	const changeCurrency = R.compose( 
+	const changeCurrency = R.compose(
 			R.andThen(
 				Either.either(
-					(payload) => console.err(payload),
+					(payload) => console.error(payload),
 	 				dispatch.curry(actions.CURRENCY_AND_RATE)
 				)
 			),

@@ -7,7 +7,7 @@ const useOrders = () => {
 
 	return {
 		...fetch,
-		data: fetch?.data?.data.map(OrderFactory)
+		data: fetch?.data?.data.map(OrderFactory) || []
 	}
 }
 
