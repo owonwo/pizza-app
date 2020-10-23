@@ -35,9 +35,9 @@ export default function Shipping () {
 		resolver: yupResolver(deliverySchema),
 		mode: "onChange",
 		defaultValues: {
-			phone: "03203923",
-			zipcode: '209823',
-			delivery_address: "27 Kings Avenue, Porter Land, UK."
+			// phone: "03203923",
+			// zipcode: '209823',
+			// delivery_address: "27 Kings Avenue, Porter Land, UK."
 		}
 	});
 	const showErrMessageIfAny = useErrors(errors);
