@@ -90,13 +90,13 @@ export default function Shipping () {
 					onKeyDown={noDigits}
 					message={showErrMessageIfAny('name')}/>
 				<Labelled.Input ref={register} type="text" fullwidth name="email" label="Email Address •" placeholder="john.snow@domain.com"
-					inputmode="email"
+					inputMode="email"
 					message={showErrMessageIfAny('email')}/>
 				<Labelled.Number ref={register} type="number" fullwidth 
 				  name="phone" 
 					label="Phone Number •" 
 					placeholder="+ 20 398 2039"
-					inputmode="tel"
+					inputMode="tel"
 					style={{ textAlign: "left" }}
 					message={showErrMessageIfAny('phone')}
 					/>
@@ -106,7 +106,7 @@ export default function Shipping () {
 						name="zipcode" 
 						label="ZIP Code •" 
 						placeholder="500238"
-						inputmode="tel"
+						inputMode="tel"
 						style={{ textAlign: "left" }}
 						message={showErrMessageIfAny('zipcode')}
 					/>

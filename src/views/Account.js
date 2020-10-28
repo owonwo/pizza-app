@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import Layout from "./Layout";
 import  useAuth from '../hooks/useAuth';
 import  useOrders from '../hooks/useOrders';
+import { ChevronDown } from 'react-feather';
 import LinearLoader from '../components/LinearLoader';
 import { Stack } from '@wigxel/react-components/lib/layout';
 import  { useStore as useAuthStore } from '../stores/AuthStore';
@@ -66,14 +67,15 @@ const Account = () => {
 
 const RenderHistory = (e) => {
 	const [state, setState] = React.useState(false);
+	const setAngleClass = a => a ? 'rotate-180' : 'rotate-0';
 
 	return (
-		<li className="block border-mix py-2 border-b border-mix mb-0">
-			<div className="flex justify-between w-full items-center">
+		<li className="block border-mix py-2 border-b border-mix mb-0 max-w-sm">
+			<div className="flex justify-between w-full items-start">
 				<span className="whitespace-no-wrap">Delivery To:</span>
 				<div className="text-right">
 					<span className="block text-blue-400 text-xs">{e.status}</span>
-					<span className="block text-xs">{e.toNow()}</span>
+					<span className="block text-xs opacity-75">{e.toNow()}</span>
 				</div>
 			</div>
 			<section className="flex flex-col mb-4">
@@ -83,18 +85,18 @@ const RenderHistory = (e) => {
 			<section>
 				<Collapsible open={state}>
 					{(e.products || []).map((e, idx) => (
-						<li key={idx} className="py-1 flex items-center">
-							<span className="mx-2">{idx + 1}.</span>
+						<li key={idx} className="py-1 flex items-start">
+							{console.log(e)}
 							<img 
 								src={e.product.image}
-								className="w-8 h-8 object-cover rounded-lg overflow-hidden mx-2"
+								className="w-16 h-16 object-cover rounded-lg overflow-hidden mx-2"
 								alt={e.product.name} />
-							<span className="mx-2">{e.quantity || 1}x {e.product.name}</span>
+							<span className="mx-2 py-2">{e.quantity || 1}x {e.product.name}</span>
 						</li>
 					))}
 				</Collapsible>
-				<button className="border py-1 w-full mt-2" onClick={() => setState(!state)}>
-					See Ordered Pizzas - {e.products?.length || 0}
+				<button className="border-mix border py-1 bg-black text-white py-2 w-full mt-2 rounded-lg" onClick={() => setState(!state)}>
+					Review Order <ChevronDown className={`transform inline-block transition-transform duration-150 ease-in-out ${setAngleClass(state)}`} />
 				</button>
 			</section>
 		</li>

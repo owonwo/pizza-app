@@ -4,7 +4,7 @@ import { useLayout } from '../libs/LayoutStore';
 export const showErrMessageIfAny = (field, errors, options = {}) => {
 	if (errors[field]) {
 		return <div className="px-4 text-right text-sm">
-			<span className={`${options.darkMode ? 'text-yellow-200' : 'text-red'}`}>
+			<span className={`${options.darkMode ? 'text-alert-blue' : 'text-red'}`}>
 				{errors[field].message}
 			</span>
 		</div>

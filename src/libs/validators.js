@@ -14,9 +14,9 @@ const userInfoSchema = {
 export const deliverySchema = yup.object().shape({
   ...userInfoSchema,
   zipcode: yup.string()
-  	.min(6)
+  	.min(4)
   	.required("Please enter a valid ZIP code."),
-  delivery_address: yup.string().required("You didn't provide a delivery address.")
+  delivery_address: yup.string().min(8, "Address is too short.").required("You didn't provide a delivery address.")
 });
 
 export const loginSchema = yup.object().shape({

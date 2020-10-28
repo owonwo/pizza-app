@@ -51,7 +51,7 @@ export const PizzaCard = (props) => {
 	        <P>
 	          <b>{props.name}</b>
 	        </P>
-	        <p className="text-sm mb-2">
+	        <p className="text-sm">
 	        	{props.description}
 	        </p>
         </div>
@@ -64,12 +64,12 @@ export const PizzaCard = (props) => {
 	          	onDecrement={() => quantity >= 2 && setQuantity(quantity - 1)} />
           </div>
           {inCart(props.getId()) ? (
-            <span className="in-cart w-full md:w-auto border py-2 px-2 flex items-center justify-center rounded-lg">
-              <Check size={15} /> <span className="ml-2">Added</span>
+            <span className="in-cart w-full text-white md:w-auto border py-2 px-2 flex items-center justify-center rounded-lg">
+              <Check size={15} /> <span className="ml-2 font-bold">Added</span>
             </span>
           ) : (
             <button
-              className="outline-none w-full md:w-auto flex items-center justify-center  border px-2 py-2 border-mix rounded-lg
+              className="outline-none bg-black text-white w-full md:w-auto flex items-center justify-center p-2 rounded-lg
               	hover:border-gray-800"
               onClick={() => {
                 dispatch({

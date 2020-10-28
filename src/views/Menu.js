@@ -6,7 +6,7 @@ import { H1, P } from "@wigxel/react-components/lib/typography";
 import { useProducts } from '../hooks/useProducts';
 
 export const Menu = () => {
-	const { products: pizzas = [], loading = false, error } = useProducts();
+	const { products: pizzas = [], loading = false } = useProducts();
 
   return (
     <Layout>
@@ -22,7 +22,7 @@ export const Menu = () => {
 	        	<Preloader size={40} />
 	        </div>}
         </section>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-6 w-full mt-4">
+        <div className="grid grid-cols-2 col-gap-4 row-gap-6 lg:grid-cols-4 lg:gap-6 w-full mt-4">
           {pizzas
             .map((e) => {
               return <PizzaCard key={e.getId()} {...e} />;

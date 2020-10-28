@@ -27,6 +27,8 @@ const useCart = () => {
 			product_ids: R.map(IdQuantityPair, items)
 		}));
 
+		// alert(JSON.stringify(base.response))
+		
 		if (!base.response.ok) {
 			return Either.Left(payload);
 		}

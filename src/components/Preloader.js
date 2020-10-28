@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const _Preloader = ({ size }) => {
 	return (
 		<Preloader>
-	    <div class="preloader-fill" 
+	    <div className="preloader-fill" 
 	    	style={{ width: size, height: size }}>
-        <div class="load">
+        <div className="load">
         	<span />
         	<span />
         	<span />
