@@ -9,7 +9,7 @@ const CURRENCIES = Object.freeze({
 	'EUR': '€',
 });
 
-const getSymbolEntity = R.ifElse(
+export const getSymbolEntity = R.ifElse(
 	R.isNil, 
 	R.always('$'), 
 	R.prop(R.__, CURRENCIES)
@@ -55,7 +55,8 @@ const useCurrency = () => {
 	return {
 		currency,
 		changeCurrency, 
-		formatPrice
+		formatPrice,
+		getSymbolEntity
 	}
 }
 
